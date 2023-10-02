@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-redis-stateful-set
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-redis-db
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-redis-db
+    spec:
+      containers:
+        - name: redis
+          image: {{ .Values.db.redis.image }}:{{ .Values.db.redis.tag }}
+          imagePullPolicy: {{ .Values.db.redis.imagePullPolicy }}
+          ports:
+            - name: redis
+              containerPort: {{ .Values.db.redis.listenPort }}
+              hostPort: {{ .Values.db.redis.listenPort }}
+          volumeMounts:
+            - name: {{ .Release.Name }}-redis-persistent-storage
+              mountPath: /data
+      volumes:
+        - name: {{ .Release.Name }}-redis-persistent-storage
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-redis-pv-claim

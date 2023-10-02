@@ -1,0 +1,16 @@
+{{- $name := .Values.db.mysql.persistentVolumeHostPath | required ".Values.db.mysql.persistentVolumeHostPath is required." -}}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-mysql-pv
+  labels:
+    type: local
+    app: {{ .Release.Name }}-mysql-db
+spec:
+  storageClassName: manual
+  capacity:
+    storage: {{ .Values.db.mysql.volumeSize }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: {{ .Values.db.mysql.persistentVolumeHostPath }}

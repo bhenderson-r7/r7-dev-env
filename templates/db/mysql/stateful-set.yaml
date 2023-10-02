@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-mysql-stateful-set
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-mysql-db
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-mysql-db
+    spec:
+      containers:
+        - name: mysql
+          image: {{ .Values.db.mysql.image }}:{{ .Values.db.mysql.tag }}
+          imagePullPolicy: {{ .Values.db.mysql.imagePullPolicy }}
+          env:
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "yes"
+          ports:
+            - name: mysql
+              containerPort: {{ .Values.db.mysql.listenPort }}
+              hostPort: {{ .Values.db.mysql.listenPort }}
+          volumeMounts:
+            - name: {{ .Release.Name }}-mysql-persistent-storage
+              mountPath: /var/lib/mysql
+            - name: {{ .Release.Name }}-mysql-config
+              mountPath: /etc/mysql/my.cnf
+              subPath: my.cnf
+      volumes:
+        - name: {{ .Release.Name }}-mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-mysql-pv-claim
+        - name: {{ .Release.Name }}-mysql-config
+          configMap:
+            name: {{ .Release.Name }}-mysql-config-cm

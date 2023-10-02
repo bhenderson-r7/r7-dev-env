@@ -1,0 +1,16 @@
+{{- $name := .Values.db.redis.persistentVolumeHostPath | required ".Values.db.redis.persistentVolumeHostPath is required." -}}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-redis-pv
+  labels:
+    type: local
+    app: {{ .Release.Name }}-redis-db
+spec:
+  storageClassName: manual
+  capacity:
+    storage: {{ .Values.db.redis.volumeSize }}
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: {{ .Values.db.redis.persistentVolumeHostPath }}
