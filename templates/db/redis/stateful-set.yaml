@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: redis
-          image: {{ .Values.db.redis.image }}:{{ .Values.db.redis.tag }}
+          image: {{ .Values.db.redis.image }}
           imagePullPolicy: {{ .Values.db.redis.imagePullPolicy }}
           ports:
             - name: redis

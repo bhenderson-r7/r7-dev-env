@@ -1,15 +1,12 @@
 db:
   mysql:
-    listenPort: 3306
-    image: mysql
-    tag: 8.1
+    image: mysql:8.1
     imagePullPolicy: Always
+    listenPort: 3306
     volumeSize: 20Gi
-    allowEmptyRootPassword: true
 
   redis:
-    listenPort: 6379
-    image: redis
-    tag: latest
+    image: redis:latest
     imagePullPolicy: Always
+    listenPort: 6379
     volumeSize: 10Gi

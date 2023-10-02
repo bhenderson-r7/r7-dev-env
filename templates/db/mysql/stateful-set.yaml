@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: {{ .Values.db.mysql.image }}:{{ .Values.db.mysql.tag }}
+          image: {{ .Values.db.mysql.image }}
           imagePullPolicy: {{ .Values.db.mysql.imagePullPolicy }}
           env:
             - name: MYSQL_ALLOW_EMPTY_PASSWORD
