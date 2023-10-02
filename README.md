@@ -5,12 +5,26 @@ The intended use is with Docker Desktop
 
 ## Prerequisites
 
-* Install Docker desktop
+* Install Docker Desktop
 * Enable Kubernetes
-* Helm
+* Install Helm
 
 ### Installing Helm
 
 ```
 brew install helm
+```
+
+## Getting started
+
+The following command will install or upgrade MySQL 8.1 and Redis into your local Docker Desktop K8s cluster
+```
+make install
+```
+
+## Uninstall everything
+
+The following command will uninstall everything from your local Docker Desktop K8s cluster but leave the data directories intact
+```
+make uninstall
 ```
