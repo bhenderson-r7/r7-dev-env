@@ -1,6 +1,6 @@
 db:
   mysql:
-    image: mysql:8.1
+    image: mysql:8.0
     imagePullPolicy: Always
     listenPort: 3306
     volumeSize: 20Gi
