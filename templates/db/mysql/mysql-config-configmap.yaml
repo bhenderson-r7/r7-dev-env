@@ -9,3 +9,4 @@ data:
     table_open_cache = 100
     innodb_lock_wait_timeout = 10
     wait_timeout = 28800
+    default-time-zone = "+00:00"
