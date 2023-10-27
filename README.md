@@ -17,6 +17,11 @@ brew install helm
 
 ## Getting started
 
+If you've used `kubectl` for K8s clusters other than the local Docker Desktop cluster, run
+```
+kubectl config use-context docker-desktop
+```
+
 The following command will install or upgrade MySQL 8.1 and Redis into your local Docker Desktop K8s cluster
 ```
 make install
