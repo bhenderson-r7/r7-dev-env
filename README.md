@@ -28,3 +28,19 @@ The following command will uninstall everything from your local Docker Desktop K
 ```
 make uninstall
 ```
+
+## Create a snapshot of the mysql database
+
+The following command will create a snapshot of the current mysql state
+
+```
+make snapshot
+```
+
+## Restore the most recent mysql snapshot
+
+The following command will restore the most recent mysql snapshot 
+
+```
+make restore
+```
