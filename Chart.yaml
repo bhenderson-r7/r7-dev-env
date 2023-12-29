@@ -3,4 +3,4 @@ name: k8s-development-databases
 description: A Helm chart for deploying development databases to Kubernetes on Docker Desktop
 type: application
 version: 0.1.0
-appVersion: "mysql:8.1+redis:latest"
+appVersion: "mysql:8.0+redis:latest"
