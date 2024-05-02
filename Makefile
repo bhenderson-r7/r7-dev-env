@@ -6,12 +6,13 @@ MYSQLLATESTSNAPSHOT ?= $(shell ls -t _data/_snapshot | grep -m 1 mysql)
 
 .PHONY: help
 help:
-	@echo "============================================================"
+	@echo "===================================================================="
 	@echo "  install                   install or upgrade the helmchart"
 	@echo "  uninstall                 uninstall the helmchart"
 	@echo "  snapshot                  create a snapshot mysql"
 	@echo "  restore                   restore most recent mysql snapshot"
-	@echo "------------------------------------------------------------"
+	@echo "  update                    restart all databases to pull new images"
+	@echo "--------------------------------------------------------------------"
 
 .PHONY: install
 install:
@@ -46,3 +47,12 @@ scale-down-mysql:
 
 scale-up-mysql:
 	kubectl scale statefulset -n ${NAMESPACE} --replicas=1 ${NAMESPACE}-mysql-stateful-set
+
+.PHONY: update
+update: update-mysql update-redis
+
+update-mysql:
+	kubectl rollout restart statefulset -n ${NAMESPACE} ${NAMESPACE}-mysql-stateful-set
+
+update-redis:
+	kubectl rollout restart statefulset -n ${NAMESPACE} ${NAMESPACE}-redis-stateful-set
