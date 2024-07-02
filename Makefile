@@ -2,7 +2,7 @@ NAMESPACE ?= k8s-development-databases
 MYSQLVOLUMEHOSTPATH ?= $(shell pwd)/_data/mysql
 REDISVOLUMEHOSTPATH ?= $(shell pwd)/_data/redis
 TIMESTAMP ?= $(shell date +"%Y%m%dT%H%M%S")
-MYSQLLATESTSNAPSHOT ?= $(shell ls -t _data/_snapshot | grep -m 1 mysql)
+MYSQLSNAPSHOT ?= $(shell ls -t _data/_snapshot | grep -m 1 mysql)
 
 .PHONY: help
 help:
@@ -35,12 +35,12 @@ create-snapshot-dir:
 .PHONY: restore
 restore: scale-down-mysql replace scale-up-mysql
 	@echo "------------------------------------------------------------"
-	@echo "  Snapshot restored from ${MYSQLLATESTSNAPSHOT}"
+	@echo "  Snapshot restored from ${MYSQLSNAPSHOT}"
 	@echo "------------------------------------------------------------"
 
 replace:
 	rm -rf _data/mysql
-	tar xzf _data/_snapshot/${MYSQLLATESTSNAPSHOT}
+	tar xzf _data/_snapshot/${MYSQLSNAPSHOT}
 
 scale-down-mysql:
 	kubectl scale statefulset -n ${NAMESPACE} --replicas=0 ${NAMESPACE}-mysql-stateful-set
