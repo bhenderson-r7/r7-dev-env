@@ -1,4 +1,4 @@
-NAMESPACE ?= k8s-development-databases
+NAMESPACE ?= r7-dev-env
 MYSQLVOLUMEHOSTPATH ?= $(shell pwd)/_data/mysql
 REDISVOLUMEHOSTPATH ?= $(shell pwd)/_data/redis
 TIMESTAMP ?= $(shell date +"%Y%m%dT%H%M%S")
@@ -12,6 +12,7 @@ help:
 	@echo "  snapshot                  create a snapshot mysql"
 	@echo "  restore                   restore most recent mysql snapshot"
 	@echo "  update                    restart all databases to pull new images"
+	@echo "  healthcheck               check the health of the deployment"
 	@echo "--------------------------------------------------------------------"
 
 .PHONY: install
@@ -24,6 +25,10 @@ install:
 .PHONY: uninstall
 uninstall:
 	helm uninstall ${NAMESPACE} --namespace ${NAMESPACE}
+
+.PHONY: healthcheck
+healthcheck:
+	kubectl get all -n ${NAMESPACE}
 
 .PHONY: snapshot
 snapshot: create-snapshot-dir

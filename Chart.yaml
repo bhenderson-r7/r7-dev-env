@@ -1,6 +1,6 @@
 apiVersion: v2
-name: k8s-development-databases
-description: A Helm chart for deploying development databases to Kubernetes on Docker Desktop
+name: r7-dev-env
+description: A Helm chart for deploying development environment to Kubernetes on Docker Desktop
 type: application
-version: 0.1.0
+version: 0.2.0
 appVersion: "mysql:8.0+redis:latest"
