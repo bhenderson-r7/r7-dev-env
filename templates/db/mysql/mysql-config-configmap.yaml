@@ -6,7 +6,7 @@ data:
   my.cnf: |-
     [mysqld]
     max_allowed_packet = 512M
-    table_open_cache = 100
+    table_open_cache = 20000
     innodb_lock_wait_timeout = 10
     wait_timeout = 28800
     default-time-zone = "+00:00"
