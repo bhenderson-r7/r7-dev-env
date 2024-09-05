@@ -12,7 +12,7 @@ help:
 	@echo "  snapshot                  create a snapshot mysql"
 	@echo "  restore                   restore most recent mysql snapshot"
 	@echo "  update                    restart all databases to pull new images"
-	@echo "  healthcheck               check the health of the deployment"
+	@echo "  status                    check the health of the deployment"
 	@echo "--------------------------------------------------------------------"
 
 .PHONY: install
@@ -26,8 +26,8 @@ install:
 uninstall:
 	helm uninstall ${NAMESPACE} --namespace ${NAMESPACE}
 
-.PHONY: healthcheck
-healthcheck:
+.PHONY: status
+status:
 	kubectl get all -n ${NAMESPACE}
 
 .PHONY: snapshot
@@ -54,7 +54,7 @@ scale-up-mysql:
 	kubectl scale statefulset -n ${NAMESPACE} --replicas=1 ${NAMESPACE}-mysql-stateful-set
 
 .PHONY: update
-update: update-mysql update-redis
+update: install update-mysql update-redis
 
 update-mysql:
 	kubectl rollout restart statefulset -n ${NAMESPACE} ${NAMESPACE}-mysql-stateful-set
