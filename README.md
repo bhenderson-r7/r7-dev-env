@@ -4,6 +4,7 @@ This is a simple chart that deploys a development environment to a local K8s clu
 The intended use is with Docker Desktop
 
 This environment consists of:
+
 * A MYSQL 8.0 database
 * A Redis database (latest)
 
@@ -15,26 +16,28 @@ This environment consists of:
 
 ### Installing Helm
 
-```
+```bash
 brew install helm
 ```
 
 ## Getting started
 
 If you've used `kubectl` for K8s clusters other than the local Docker Desktop cluster, run
-```
+
+```bash
 kubectl config use-context docker-desktop
 ```
 
 The following command will install or upgrade MySQL 8.1 and Redis into your local Docker Desktop K8s cluster
-```
+```bash
 make install
 ```
 
 ## Uninstall everything
 
 The following command will uninstall everything from your local Docker Desktop K8s cluster but leave the data directories intact
-```
+
+```bash
 make uninstall
 ```
 
@@ -42,21 +45,21 @@ make uninstall
 
 The following command will create a snapshot of the current mysql state
 
-```
+```bash
 make snapshot
 ```
 
 ## Restore the most recent mysql snapshot
 
-The following command will restore the most recent mysql snapshot 
+The following command will restore the most recent mysql snapshot
 
-```
+```bash
 make restore
 ```
 
 ## Resoure a specific mysql snapshot
 
-```
+```bash
 make restore MYSQLSNAPSHOT=mysql-20240627T151112.tar.gz
 ```
 
@@ -64,13 +67,13 @@ make restore MYSQLSNAPSHOT=mysql-20240627T151112.tar.gz
 
 The following command will check the health of the deployment
 
-```
-make healthcheck
+```bash
+make status 
 ```
 
 A healthy state should look something like:
 
-```
+```bash
 kubectl get all -n r7-dev-env
 NAME                                  READY   STATUS    RESTARTS   AGE
 pod/r7-dev-env-mysql-stateful-set-0   1/1     Running   0          2m25s
@@ -89,7 +92,7 @@ statefulset.apps/r7-dev-env-redis-stateful-set   1/1     2m25s
 
 If your pods are not running check:
 
-```
+```bash
 kubectl describe node docker-desktop
 ```
 
