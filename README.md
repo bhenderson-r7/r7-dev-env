@@ -90,12 +90,35 @@ statefulset.apps/r7-dev-env-redis-stateful-set   1/1     2m25s
 
 ## Troubleshooting
 
+### Pods Not Running
+
 If your pods are not running check:
 
 ```bash
 kubectl describe node docker-desktop
 ```
 
+### `EvictionThresholdMet`
+
 If you see an event like `Warning  EvictionThresholdMet  ...  Attempting to reclaim ephemeral-storage` you may not have your Virtual disk limit set high enough
 
 In Docker Desk top increase `Settings -> Resources -> Advanced -> Virtual disk limit` to 128 GB
+
+### ICS Can't Authenticate
+
+If, when running the `run-ud`, `run-web`, `run-worker`, or `run-scheduler` `make` targets, you run into an error like
+
+```
+redis.exceptions.AuthenticationError: invalid username-password pair or user is disabled
+```
+
+Ensure the following environment variables are unset in the environment running the ICS process:
+
+```
+DIVVY_REDIS_LEGACY_TRANSACTIONS_ENABLED
+DIVVY_REDIS_CLUSTER_MODE_ENABLED
+DIVVY_REDIS_GLOBAL_KEY_PREFIXING_ENABLED
+DIVVY_IPIMS_ORGANIZATION_ID
+```
+
+At time of writing we don't know which of these variables forces authentication inside ICS, but one of them does.
